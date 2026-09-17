@@ -20,11 +20,7 @@
         }
 
         body {
-            background-image: url("about-background.jpg");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-attachment: fixed;
+          background: linear-gradient(145deg, rgb(255, 240, 206) 0%, rgb(255, 244, 221) 100%);
 
             height: 100vh;
             display: flex;
@@ -53,7 +49,6 @@
             max-width: 420px;
             transform: rotate(-0.5deg);
             /* Drop shadow for the paper shape */
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
         }
 
         /* The paper element with grain texture and torn edges */
@@ -63,7 +58,7 @@
             z-index: 2;
 
             /* Off-white base color with slight warmth */
-            background-color: rgb(255, 244, 221);
+            background-color: rgb(198, 151, 86);
 
             /* Inline SVG Noise Filter for grain texture */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
@@ -83,7 +78,7 @@
         /* Horizontal ruled lines */
         .lines {
             background-image: repeating-linear-gradient(
-                transparent, transparent 31px, rgba(0,0,0,0.3) 32px
+                transparent, transparent 31px, rgba(0,0,0,1) 32px
             );
             /* Base line-height for reference, but we'll override in .text */
             line-height: 32px;
@@ -121,7 +116,7 @@
             position: absolute;
             width: 90px;
             height: 32px;
-            background-color: rgba(235, 230, 210, 0.65);
+            background-color: rgba(208, 201, 176, 0.65);
             backdrop-filter: blur(1.5px);
             -webkit-backdrop-filter: blur(1.5px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.08);
@@ -196,10 +191,6 @@
             </div>
         </div>
     </div>
-
-    <footer>
-        <a href="https://www.wikiart.org/en/caspar-david-friedrich/solitary-tree-1822" title="about this painting"> ? </a>
-    </footer>
 
     <!-- Streamlined Font Loading Script -->
     <script>
