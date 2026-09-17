@@ -34,11 +34,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       text-align: center;
       animation: gentleAppear 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
       width: 100%;
       max-width: 520px;
+      gap: 2.4rem;
     }
 
     h1 {
@@ -47,98 +47,54 @@
       letter-spacing: -0.02em;
       word-spacing: 0.05em;
       color: #1f1c18;
-      margin-bottom: 2.2rem;
       line-height: 1.1;
       text-shadow: 0 1px 1px rgba(0, 0, 0, 0.02);
       padding-left: 0.05em;
     }
 
-    /* iOS timer–style scrolling list */
-    .posts-scroller {
-      width: 100%;
-      max-height: 240px;
-      /* about three rows visible, inviting scroll */
-      overflow-y: auto;
-      scroll-snap-type: y mandatory;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 0 0 0.5px rgba(0, 0, 0, 0.02) inset;
-      padding: 8px 0;
-      position: relative;
-
-      /* hide scrollbar but keep functionality */
-      scrollbar-width: none;
-      /* firefox */
-      -ms-overflow-style: none;
-      /* ie */
-    }
-
-    .posts-scroller::-webkit-scrollbar {
-      display: none;
-      /* chrome, safari, edge */
-    }
-
-    .post-item {
-      scroll-snap-align: start;
-      padding: 0 24px;
-      height: 72px;
-      /* tall enough to feel spacious, like iOS picker rows */
+    /* plain, minimal list of posts */
+    .posts {
+      list-style: none;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
+      flex-direction: column;
+      gap: 0.9rem;
+      font-size: 1.15rem;
       font-weight: 350;
       letter-spacing: -0.01em;
       color: #2e2a24;
-      transition: color 0.2s ease, background 0.2s ease;
-      cursor: default;
-      border-radius: 12px;
-      margin: 2px 12px;
-      background: transparent;
-      /* subtle divider between items? we prefer no line — clean iOS feel */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    /* mimic the "selected" feel on hover/touch, but keep minimal */
-    .post-item:hover {
-      background: rgba(235, 230, 222, 0.5);
+    .posts li {
+      transition: color 0.2s ease;
+    }
+
+    .posts li:hover {
       color: #1f1c18;
     }
 
-    /* soft fade at top and bottom edges to suggest scrollability */
-    .posts-scroller::before,
-    .posts-scroller::after {
-      content: '';
-      position: sticky;
-      left: 0;
-      right: 0;
-      height: 24px;
-      z-index: 2;
-      pointer-events: none;
-      display: block;
-    }
-
-    .posts-scroller::before {
-      top: 0;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
-      margin-bottom: -24px;
-    }
-
-    .posts-scroller::after {
-      bottom: 0;
-      background: linear-gradient(to top, rgba(255, 255, 255, 0.9), transparent);
-      margin-top: -24px;
-    }
-
-    /* Ensure inner content respects sticky fade without cutting off */
-    .posts-list {
+    /* footer */
+    footer {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.4rem 1.4rem;
+      font-size: 0.85rem;
+      font-weight: 350;
+      letter-spacing: 0.02em;
+      color: #7a736a;
+      margin-top: 1rem;
+    }
+
+    footer a {
+      color: #7a736a;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    footer a:hover {
+      color: #1f1c18;
+      border-bottom-color: #c9c1b6;
     }
 
     @keyframes gentleAppear {
@@ -163,24 +119,16 @@
     @media (max-width: 400px) {
       h1 {
         font-size: 2rem;
-        margin-bottom: 1.6rem;
       }
 
-      .post-item {
+      .landing {
+        gap: 1.8rem;
+      }
+
+      .posts {
         font-size: 1rem;
-        height: 64px;
-        padding: 0 18px;
+        gap: 0.7rem;
       }
-
-      .posts-scroller {
-        max-height: 210px;
-      }
-    }
-
-    h1:focus-visible {
-      outline: 2px solid #b0a89a;
-      outline-offset: 8px;
-      border-radius: 4px;
     }
   </style>
 </head>
@@ -189,14 +137,17 @@
   <div class="landing">
     <h1>grflow's blog</h1>
 
-    <!-- iOS timer-style scrollable list of posts -->
-    <div class="posts-scroller" role="list" aria-label="blog posts">
-      <div class="posts-list">
-        <div class="post-item" role="listitem">the quiet art of noticing</div>
-        <div class="post-item" role="listitem">building honest objects</div>
-        <div class="post-item" role="listitem">on slowness &amp; craft</div>
-      </div>
-    </div>
+    <ul class="posts">
+      <li>the quiet art of noticing</li>
+      <li>building honest objects</li>
+      <li>on slowness &amp; craft</li>
+    </ul>
+
+    <footer>
+      <a href="mailto:goldenriverflows@mailbox.org">𓂃✍︎ email</a>
+      <p>𓇼 ⋆.˚ 𓆉 𓆝 𓆡⋆.˚ 𓇼</p>
+      <a href="https://twitter.com/grflows0" target="_blank" rel="noopener noreferrer">♡ twitter</a>
+    </footer>
   </div>
 </body>
 
