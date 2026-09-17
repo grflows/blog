@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+    <!-- Preconnect and preload for fast font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- BASE & LAYOUT --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url("about-background.jpg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            /* Prevent text selection */
+            user-select: none;
+        }
+
+        /* Footer Link */
+        a {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+            color: gainsboro;
+            text-decoration: none;
+        }
+
+        /* --- NOTE DESIGN --- */
+        .note-container {
+            position: relative;
+            width: 90%;
+            max-width: 420px;
+            transform: rotate(-0.5deg);
+            /* Drop shadow for the paper shape */
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+
+        /* The paper element with grain texture and torn edges */
+        .paper {
+            padding: 45px 35px;
+            position: relative;
+            z-index: 2;
+
+            /* Off-white base color with slight warmth */
+            background-color: #f4f3ed;
+
+            /* Inline SVG Noise Filter for grain texture */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+
+            /* Torn paper edges */
+            clip-path: polygon(
+                1% 2%, 5% 0%, 15% 1%, 25% 0%, 40% 2%, 55% 0%, 70% 1%, 85% 0%, 95% 2%,
+                100% 5%, 99% 15%, 100% 30%, 98% 45%, 100% 60%, 99% 75%, 100% 85%,
+                98% 95%, 95% 100%, 85% 98%, 70% 100%, 55% 99%, 40% 100%, 25% 98%,
+                10% 100%, 2% 95%, 0% 85%, 1% 70%, 0% 55%, 1% 40%, 0% 25%, 1% 10%
+            );
+
+            /* Inner shadow for paper thickness */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.06);
+        }
+
+        /* Horizontal ruled lines */
+        .lines {
+            background-image: repeating-linear-gradient(
+                transparent, transparent 31px, rgba(0,0,0,0.3) 32px
+            );
+            /* Base line-height for reference, but we'll override in .text */
+            line-height: 32px;
+        }
+
+        /* Handwritten text */
+        .text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #5c2a2a;
+
+            /* Slightly shifted rotation and position */
+            transform: rotate(-1.2deg) translateX(-2px);
+            letter-spacing: 0.5px;
+            text-align: center;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+
+            /* Decoupled from the ruled lines */
+            line-height: 30px; /* Drifts slightly off the 32px lines */
+            padding-top: 8px;  /* Pushes the first line down slightly */
+
+            /* Fade-in effect to prevent font flickering */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Triggers when font is fully loaded */
+        body.font-loaded .text {
+            opacity: 1;
+        }
+
+        /* --- TAPE EFFECT --- */
+        .tape {
+            position: absolute;
+            width: 90px;
+            height: 32px;
+            background-color: rgba(235, 230, 210, 0.65);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            z-index: 3;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Tape Positions and Rotations */
+        .tape-tl {
+            top: -15px;
+            left: -15px;
+            transform: rotate(-45deg);
+            clip-path: polygon(0 0, 100% 5%, 95% 100%, 5% 90%);
+        }
+        .tape-tr {
+            top: -15px;
+            right: -15px;
+            transform: rotate(45deg);
+            clip-path: polygon(5% 5%, 100% 0, 95% 90%, 0 100%);
+        }
+        .tape-bl {
+            bottom: -15px;
+            left: -15px;
+            transform: rotate(45deg);
+            clip-path: polygon(0 5%, 95% 0, 100% 95%, 5% 100%);
+        }
+        .tape-br {
+            bottom: -15px;
+            right: -15px;
+            transform: rotate(-45deg);
+            clip-path: polygon(5% 0, 100% 10%, 95% 100%, 0 90%);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 480px) {
+            .text {
+                font-size: 1.3rem;
+                line-height: 24px; /* Drifts off the 26px lines */
+                padding-top: 6px;
+            }
+            .paper { padding: 35px 25px; }
+            .lines {
+                background-image: repeating-linear-gradient(
+                    transparent, transparent 25px, rgba(0,0,0,0.3) 26px
+                );
+                line-height: 26px;
+            }
+            .tape {
+                width: 70px;
+                height: 26px;
+            }
+            .tape-tl { top: -12px; left: -10px; }
+            .tape-tr { top: -12px; right: -10px; }
+            .tape-bl { bottom: -12px; left: -10px; }
+            .tape-br { bottom: -12px; right: -10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="note-container">
+        <div class="paper">
+            <!-- Tape Elements -->
+            <div class="tape tape-tl"></div>
+            <div class="tape tape-tr"></div>
+            <div class="tape tape-bl"></div>
+            <div class="tape tape-br"></div>
+
+            <div class="lines">
+                <p class="text">
+                    I'm a man with a chaotic mind living in a chaotic world. this little corner of the internet is my Serenity </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://www.wikiart.org/en/caspar-david-friedrich/solitary-tree-1822" title="about this painting">🖼</a>
+    </footer>
+
+    <!-- Streamlined Font Loading Script -->
+    <script>
+        if ('fonts' in document) {
+            document.fonts.ready.then(() => document.body.classList.add('font-loaded'));
+        } else {
+            document.body.classList.add('font-loaded'); // Fallback
+        }
+    </script>
+</body>
+</html>
